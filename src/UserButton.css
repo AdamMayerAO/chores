@@ -1,0 +1,12 @@
+.adult{
+    max-width: 380px;
+    margin: 0 10px;
+    text-align: right;
+}
+
+    
+.kid{
+    max-width: 380px;
+    margin: 0 10px;
+    text-align: left;
+}

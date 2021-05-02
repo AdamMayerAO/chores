@@ -1,29 +1,33 @@
 import React, { Component } from 'react'
 import Context from '../Context'
 
-export default class SigninForm extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            householdName: ''
-        }
+export default class ReturningUsers extends Component {
+    // constructor(props){
+    //     super(props)
+    //     this.state = {
+    //         householdName: ''
+    //     }
+    // }
+    static defaultProps = {
+        history: {
+            push: ()=>{}
+        },
     }
-    
     static contextType = Context;
     
-    setHouseholdName(householdName){
-        this.setState({householdName})
-    };
+    // setHouseholdName(householdName){
+    //     this.setState({householdName})
+    // };
 
-    handleSubmit= e => {
+    handleSubmit= (e) => {
         e.preventDefault()
-        const Household = {
-            householdName:  e.target['household-name'].value,
-            password: e.target['password'].value,
-        }
-        console.log("Submitted")
-      // this.context.addHousehold(this.state)
-      
+        this.context.addHousehold(e.target['household-name'].value)
+        this.props.history.push('/landing')
+
+        // const Household = {
+        //     householdName:  e.target['household-name'].value,
+        //     password: e.target['password'].value,
+        // }
     //   fetch(`${config.API_ENDPOINT}/ENDPOINT`, {
     //     method: 'POST',
     //     headers: {
@@ -48,7 +52,7 @@ export default class SigninForm extends Component {
     render(){
     return(
         <div>
-            <form className='SignIn-form' onSubmit={this.handleSubmit} >
+            <form className='SignIn-form' id='household-name'  onSubmit={this.handleSubmit} >
                 <div>Welcome Back! Please Sign In:</div>
                 <div>
                     <label htmlFor="household-name">Household name</label>
@@ -58,7 +62,7 @@ export default class SigninForm extends Component {
                         type="text" 
                         name='household-name' 
                         id='household-name' 
-                        onChange={(e) => this.setHouseholdName(e.target.value)} 
+                        //onChange={(e) => this.setHouseholdName(e.target.value)} 
                     />
                 </div>
                 
@@ -67,6 +71,7 @@ export default class SigninForm extends Component {
                     <label htmlFor="password">Password</label>
                     <input
                         required
+                        placeholder = 'password'
                         type="password" 
                         name='password' 
                         id='password' 

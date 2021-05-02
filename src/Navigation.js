@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Link, Redirect, BrowserRouter as Router } from 'react-router-dom'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
 import Landing from './Landing'
 import KidsDashboard from './KidsDashboard'
 import AdminDashboard from './AdminDashboard'
@@ -30,12 +30,12 @@ const Navigation = (props) =>{
                 //for parents to set up the family account
             />
             <Route 
-                path = '/admindashboard'
+                path = '/admindashboard/:id'
                 component ={AdminDashboard}
                 //parent dashboard
             />
             <Route
-                path = '/kidsdashboard'
+                path = '/kidsdashboard/:id'
                 component = {KidsDashboard}
             />
             <Route 

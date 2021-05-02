@@ -1,0 +1,13 @@
+.family{
+    display: flex; 
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.kids{
+    text-align: left;
+}
+
+.adults{
+    text-align: left;
+}

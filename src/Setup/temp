@@ -1,0 +1,21 @@
+
+
+
+ setChore(chore){
+      this.setState({ 
+          chores:{
+              chore: chore 
+          } 
+      })  
+      console.log(this.state.chores)
+  }
+
+  assignChore(member){
+    console.log(member)
+    this.setState({ 
+      chores:{
+          ... this.state,
+          assignedTo: member 
+      } 
+    }) 
+  }

@@ -1,13 +1,18 @@
-import React, {createContext} from 'react'
+import React from 'react'
 
-const Context = React.createContext({
+export default React.createContext({
     householdID: null,      
     householdName:  "",
     householdMembers: [],
     chores: [],
+    prize: '',
     addHousehold: () => {},
     addFamilyMember: () => {},
     addChore: () => {},
+    updateChore: () =>{},
+    updateCurrentUser: () =>{},
+    updatePoints: () =>{},
+    setFamilyPrize: ()=>{},
+    removeMember:() =>{},
+    removeChore:()=>{}
 })
-export const ContextProvider = Context.Provider
-export default Context

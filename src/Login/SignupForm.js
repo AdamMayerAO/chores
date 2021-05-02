@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
 import Context from '../Context'
-import {ContextProvider} from '../Context'
+
 
 export default class SignupForm extends Component {
+    static defaultProps = {
+        history: {
+            push: () =>{}
+        },
+    }
+    static contextType = Context;
+
     constructor(props){
         super(props)
         this.state = {
@@ -10,22 +17,21 @@ export default class SignupForm extends Component {
         }
     }
     
-    static contextType = Context;
-    
     setHouseholdName(householdName){
         this.setState({householdName})
+        this.context.addHousehold(householdName)
+        console.log(this.context)
+
     };
     
-    
-
-    
     handleSubmit= e => {
+        console.log(this.context)
         e.preventDefault()
-        const newHousehold = {
-            householdName:  e.target['household-name'].value,
-            email: e.target['username'].value,
-            password: e.target['newPassword'].value,
-        }
+        // const newHousehold = {
+        //     householdName:  e.target['household-name'].value,
+        //     email: e.target['username'].value,
+        //     password: e.target['newPassword'].value,
+        // }
         console.log("Submitted")
         this.props.history.push('/setup')
 
@@ -53,6 +59,7 @@ export default class SignupForm extends Component {
     }
     
     render(){
+
     return(
         <form className='signup-form' onSubmit={this.handleSubmit}>
             <div>Welcome, Please Sign Up:</div>

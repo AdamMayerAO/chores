@@ -1,29 +1,34 @@
 import React from 'react';
-import { Link, BrowserRouter as Router } from 'react-router-dom';
-import AdultButton from './AdultButton';
-import KidButton from './KidButton';
+import { Link } from 'react-router-dom';
+
+import './UserButton.css'
 
 
 export default function UserButton (props){
-   switch (props.age) {
+    switch (props.age) {
        case "adult":
         return (
-            <div>
-                <Link to ='/admindashboard'>
-                    <AdultButton
-                    name = {props.name}>{props.name}</AdultButton>
+            <div className = 'adult'>
+                <Link to ={{
+                    pathname: `/admindashboard/${props.id}`
+                }}>
+                    <button className = 'adult-button'>
+                        {props.name}
+                    </button>
                 </Link>
                 <br/>
             </div>
         );
-           break;
    
        default:
         return(
-            <div>
-                <Link to ='/kidsdashboard'>
-                    <KidButton
-                    name = {props.name}>{props.name}</KidButton>
+            <div className = 'kid'>
+                <Link to={{
+                    pathname: `/kidsdashboard/${props.id}`
+                }}>
+                    <button className = 'kid-button'>
+                       {props.name}
+                    </button>
                 </Link>
                 <br/>
             </div>
