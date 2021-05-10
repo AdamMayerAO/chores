@@ -19,12 +19,12 @@ export default class Landing extends Component{
         }
     }
     render(){
-        const users = this.context.householdMembers
+        const users = this.context.members
         const kids = users.filter(kid => kid.age ==='kid')
         const adults = users.filter(adult => adult.age ==='adult')
         return(
             <div>
-                <h1>Welcome {this.context.householdID} Family</h1>
+                <h1>Welcome {this.context.household.householdName} Family</h1>
                 <h2>Click on your name to start</h2>
                 <div className = 'family'>
                     <div className='kids'> Kids:

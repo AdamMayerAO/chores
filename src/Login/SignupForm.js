@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Context from '../Context'
+import config from '../config'
 
 
 export default class SignupForm extends Component {
@@ -20,42 +21,38 @@ export default class SignupForm extends Component {
     setHouseholdName(householdName){
         this.setState({householdName})
         this.context.addHousehold(householdName)
-        console.log(this.context)
+        //console.log(this.context)
 
     };
     
-    handleSubmit= e => {
-        console.log(this.context)
+    handleSubmit= (e) => {
         e.preventDefault()
-        // const newHousehold = {
-        //     householdName:  e.target['household-name'].value,
-        //     email: e.target['username'].value,
-        //     password: e.target['newPassword'].value,
-        // }
-        console.log("Submitted")
-        this.props.history.push('/setup')
-
-
-      // this.context.addHousehold(this.state)
+        const newHousehold = {
+            householdName:  e.target['household-name'].value,
+            email: e.target['username'].value,
+            password: e.target['newPassword'].value,
+        }
       
-    //   fetch(`${config.API_ENDPOINT}/ENDPOINT`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'content-type': 'application/json'
-    //     },
-    //     body: JSON.stringify(newHousehold)
-    //   })
-    //   .then(res => {
-    //     if (!res.ok)
-    //       return res.json().then(e => Promise.reject(e))
-    //     return res.json()
-    //   })
-    //   .then(household => {
-    //     this.context.addHoueshold(household)
-    //   })
-    //   .catch(error => {
-    //     console.error('add household ',{ error })
-    //   })
+        fetch(`${config.API_ENDPOINT}/household/signup`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                
+            },
+            body: JSON.stringify(newHousehold)
+        })
+        .then(res => {
+            if (!res.ok)
+            return res.json().then(e => Promise.reject(e))
+            return res.json()
+        })
+        .then(household => {
+            this.context.addHousehold(household)            
+            this.props.history.push('/setup')
+        })
+        .catch(error => {
+            console.error('add household ',{ error })
+        })
     }
     
     render(){
@@ -71,7 +68,7 @@ export default class SignupForm extends Component {
                         type="text" 
                         name='household-name' 
                         id='household-name' 
-                        onChange={(e) => this.setHouseholdName(e.target.value)} 
+                        //onChange={(e) => this.setHouseholdName(e.target.value)} 
                     />
                 </div>
                 

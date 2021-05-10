@@ -6,33 +6,18 @@ export default class CheckGoal extends Component{
     static contextType = Context;
 
     render(){
-        const totalPoints = []  
-        this.context.householdMembers.forEach(member => 
-            totalPoints.push(member.points))
-        const familyPoints = totalPoints.reduce(function(a, b){return a+b;}, 0)
-        const remainingPoints = parseInt(this.context.prize.goal) - parseInt(familyPoints)
-        console.log("CheckGoal Remaining Points: ", remainingPoints)
-
+        const remainingPoints = parseInt(this.context.prize.goal) - parseInt(this.context.household.points)
         if (remainingPoints <=0) {
             return(
-                `Hooray!  We have reached our goal! Time for ${this.context.prize}`
+                `Hooray!  We have reached our goal! Time for ${this.context.prize.prize}`
             )
         } else {
             return(
-                `We need ${remainingPoints} more points to reach our goal of ${this.context.prize}`
+                remainingPoints? 
+                `We need ${remainingPoints} more points until we can ${this.context.prize.prize? this.context.prize.prize: 'get a prize'}`
+                :
+                'Update your family settings to set up your Family Goal'
             )
         }
     }
 }
-
- // const checkGoal =() =>{ 
-        //     ()<=0); 
-        //         {
-        //         return(
-        //             `Hooray!  We have reached our goal! Time for ${this.context.prize}`
-        //         ) else{
-        //             return(
-        //             `We need ${this.context.prize.goal - familyPoints} more points to reach our goal of ${this.context.prize.prize}`
-        //         )
-        //         }
-        // }

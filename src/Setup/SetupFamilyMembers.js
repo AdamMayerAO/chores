@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import './SetupFamilyMembers.css'
 import Context from '../Context'
+import config from '../config'
 
-const createID = ()=>{
-    return(
-        Math.floor(Math.random()*100000)
-    )
-}
+
+// const createID = ()=>{
+//     return(
+//         Math.floor(Math.random()*100000)
+//     )
+// }
 export default class SetupFamilyMembers extends Component{
    
     static defaultProps = {
@@ -20,31 +22,97 @@ export default class SetupFamilyMembers extends Component{
     
     handleSubmitAdult= (e)=>{
         e.preventDefault()
-        this.context.addFamilyMember({
+        const member = {
                 name: e.target['name'].value, 
                 age: 'adult',
-                id: createID(),
-                points: 0
-        })
+                points: 0,
+                householdId: this.context.household.id
+        }
+        fetch(`${config.API_ENDPOINT}/members/add-member`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(member)
+          })
+          .then(res => {
+            if (!res.ok)
+            return res.json().then(e => Promise.reject(e))
+            return res.json()
+          })
+          .then(member => {
+
+            let a = (Object.entries(member)[0])
+            let m = (a[1])
+
+            this.context.addFamilyMember(m)
+            console.log(this.context)
+
+          })
+          .catch(error => {
+              console.error('add chore ',{ error })
+          })
         document.getElementById("aForm").reset();
     }
     handleSubmitKid= (e)=>{
         e.preventDefault()
-        this.context.addFamilyMember({
-                name: e.target['name'].value, 
-                age: 'kid',
-                id: createID(),
-                points: 0
-        })
+        const member = {
+            name: e.target['name'].value, 
+            age: 'kid',
+            points: 0,
+            householdId: this.context.household.id
+    }
+    fetch(`${config.API_ENDPOINT}/members/add-member`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify(member)
+      })
+      .then(res => {
+        if (!res.ok)
+        return res.json().then(e => Promise.reject(e))
+        return res.json()
+      })
+      .then(member => {
+
+        let a = (Object.entries(member)[0])
+        let m = (a[1])
+
+        this.context.addFamilyMember(m)
+        console.log("members: ", this.context.members)
+        
+
+      })
+      .catch(error => {
+          console.error('add chore ',{ error })
+      })
         document.getElementById("kForm").reset();
     }
 
     remove = (e) =>{
-        
-        const removed = this.context.householdMembers.filter(member => member.id !== parseInt(e))
-
-        this.context.removeMember(removed)
-    }
+        const member = this.context.members.find(member => member.id === parseInt(e))
+        fetch(`${config.API_ENDPOINT}/members/remove-member`, {
+            method: 'DELETE',
+            headers: {
+            'content-type': 'application/json'
+            },  
+            body: JSON.stringify(member)
+        })
+            .then(res => {
+            if (!res.ok)
+                return res.json().then(e => Promise.reject(e))
+            })
+            .then(() => {
+                console.log(this.context.members)
+            this.context.removeMember(member.id)
+            console.log(this.context.members)
+            })
+            .catch(error => {
+            console.error({ error })
+            })
+        }
+    
    render(){
         return (
         
@@ -88,7 +156,7 @@ export default class SetupFamilyMembers extends Component{
                 </section>
                 <section className = 'familyMembers'> 
                     <ul>
-                        {this.context.householdMembers.map((member, idx) =>
+                        {this.context.members.map((member, idx) =>
                             <li
                             key = {idx}>
                                 {member.name} - {member.age} {`           `}

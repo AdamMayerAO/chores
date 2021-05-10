@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
-
 import './SetupChores.css'
 import Context from '../Context'
+import config from '../config'
 
-const createID = ()=>{
-  return(
-      Math.floor(Math.random()*100000)
-  )
-}
+// const createID = ()=>{
+//   return(
+//       Math.floor(Math.random()*100000)
+//   )
+// }
 export default class SetupChores extends Component{
    
   static defaultProps = {
@@ -18,21 +18,60 @@ export default class SetupChores extends Component{
   static contextType = Context;
 
   handleSubmit= (e)=>{
-      e.preventDefault()
-      this.context.addChore({
-        chore: e.target['chore'].value,
-        points: e.target['points'].value,
-        assignedTo: e.target['assign'].value,
-        choreID: createID(),
-        done: false
-      })
-      document.getElementById("chores").reset();
+    e.preventDefault()
+    const chore = {
+      chore: e.target['chore'].value,
+      points: e.target['points'].value,
+      assignedTo: e.target['assign'].value,
+      done: false,
+      householdId: this.context.household.id
+    }
+    console.log(chore)
+    fetch(`${config.API_ENDPOINT}/chores/add-chore`, {
+      method: 'POST',
+      headers: {
+          'content-type': 'application/json',
+      },
+      body: JSON.stringify(chore)
+    })
+    .then(res => {
+      if (!res.ok)
+      return res.json().then(e => Promise.reject(e))
+      return res.json()
+    })
+    .then(chore => {
+      
+      let a = (Object.entries(chore)[0])
+      let h = (a[1])
+      console.log(h)
+      this.context.addChore(h)
+    })
+    .catch(error => {
+        console.error('add chore ',{ error })
+    })
+    document.getElementById("chores").reset();
   }
+  
   remove = (e) =>{
-    const removed = this.context.chores.filter(chore => chore.choreID !== parseInt(e))
-
-    this.context.removeChore(removed)
-}
+    const chore = this.context.chores.find(chore => chore.id === parseInt(e))
+    fetch(`${config.API_ENDPOINT}/chores/remove-chore`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json'
+      },  
+      body: JSON.stringify(chore)
+    })
+      .then(res => {
+        if (!res.ok)
+          return res.json().then(e => Promise.reject(e))
+      })
+      .then(() => {
+        this.context.removeChore(chore.id)
+      })
+      .catch(error => {
+        console.error({ error })
+      })
+  }
 
  render(){
   return (
@@ -67,7 +106,7 @@ export default class SetupChores extends Component{
               name='assign'
             >
               Assign To:
-                {this.context.householdMembers.map((member, idx) =>
+                {this.context.members.map((member, idx) =>
                   <option 
                     value={member.name}
                     key = {idx}
@@ -88,9 +127,9 @@ export default class SetupChores extends Component{
           {this.context.chores.map((chore, idx) =>
           <li
           key = {idx}>
-              {chore.chore} ({chore.points}pts) -- {chore.assignedTo}
+              {chore.chore} ({chore.points}pts) -- {chore.member_name}
               <button
-                  value = {chore.choreID}
+                  value = {chore.id}
                   onClick = {(e) => this.remove(e.target.value)}>
               Remove
               </button>

@@ -1,9 +1,8 @@
 import React from 'react'
 
 export default React.createContext({
-    householdID: null,      
-    householdName:  "",
-    householdMembers: [],
+    household:[],
+    members: [],
     chores: [],
     prize: '',
     addHousehold: () => {},
@@ -11,7 +10,7 @@ export default React.createContext({
     addChore: () => {},
     updateChore: () =>{},
     updateCurrentUser: () =>{},
-    updatePoints: () =>{},
+    updateHouseholdPoints: () =>{},
     setFamilyPrize: ()=>{},
     removeMember:() =>{},
     removeChore:()=>{}

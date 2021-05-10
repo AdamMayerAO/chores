@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import './ChooseFamilyPrize.css'
 import Context from '../Context'
+import config from '../config'
 
 export default class ChooseFamilyPrize extends Component{
     static defaultProps = {
@@ -12,10 +13,33 @@ export default class ChooseFamilyPrize extends Component{
 
      handleSubmit = (e) =>{
         e.preventDefault()
-        this.context.setFamilyPrize({
+        const prize = {
             prize: e.target['prize'].value, 
-            goal: e.target['points'].value
-        })
+            householdId: this.context.household.id,
+            goal: e.target['goal'].value
+        }
+    fetch(`${config.API_ENDPOINT}/household/prize`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify(prize)
+      })
+      .then(res => {
+        if (!res.ok)
+        return res.json().then(e => Promise.reject(e))
+        return res.json()
+      })
+      .then( () => {
+        console.log(prize)
+        this.context.setFamilyPrize({prize})
+        //alert("All Set")
+        document.getElementById("setup-family-prize").reset();
+        console.log(this.context.prize)
+      })
+      .catch(error => {
+          console.error('add chore ',{ error })
+      })
 
     }
     reset = ()=>{
@@ -46,8 +70,8 @@ export default class ChooseFamilyPrize extends Component{
                         required 
                         placeholder='50 Points' 
                         type="text" 
-                        name='points' 
-                        id='points' 
+                        name='goal' 
+                        id='goal' 
                     /><br/>
                     
                     <button type = 'submit'>

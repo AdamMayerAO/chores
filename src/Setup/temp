@@ -1,21 +1,170 @@
+import React, {Component} from 'react'
+import { Link } from 'react-router-dom';
+import Context from './Context'
+import './KidsDashboard.css'
+import CheckGoal from './CheckGoal'
 
 
+export default class KidsDashboard extends Component{
+    static defaultProps = {
+        history: {
+            push: ()=>{}
+        },
+    }
+    static contextType = Context;
 
- setChore(chore){
-      this.setState({ 
-          chores:{
-              chore: chore 
-          } 
-      })  
-      console.log(this.state.chores)
-  }
+    constructor (props) {
+        super(props)
+        this.state = {
+            token: ''
+        }
+    }
+        
+   
 
-  assignChore(member){
-    console.log(member)
-    this.setState({ 
-      chores:{
-          ... this.state,
-          assignedTo: member 
-      } 
-    }) 
-  }
+    finished =() =>{
+       // if (this.state.token !== true) {
+            const id = document.getElementById("done").value
+           // const chore = this.context.chores.find(chore => chore.id === parseInt(x))
+            // console.log("points to be added: ", x)
+            // let totalPoints = this.context.household.points
+            // totalPoints = totalPoints + parseInt(x)
+            // this.context.updateHouseholdPoints(totalPoints)
+            // console.log(this.context.household.points)
+            // this.setState({token: true})
+      //  }
+    }
+    notFinished =() =>{
+
+      //  if(this.state.token !== false) {
+            const x = document.getElementById("done").value
+            console.log("points to be added: ", x)
+            let totalPoints = this.context.household.points
+            totalPoints = totalPoints - parseInt(x)
+            this.context.updateHouseholdPoints(totalPoints)
+            console.log(this.context.household.points)
+            this.setState({token: false})
+     //   }
+    }
+
+        // const chore = this.context.chores.find(chore => chore.id === parseInt(x))
+        // console.log(chore)
+        // // if (chore.done ===false) { 
+        //     //Set chore.done ===true
+        //     const doneChore = this.context.chores.filter(chore => chore.choreID !== parseInt(value))
+        //     chore.done = true
+        //     doneChore.push(chore)
+        //     this.context.updateChore(doneChore)
+            
+            // update points
+            // const member = this.context.members.filter(member => member.id === parseInt(Object.values(this.props.match.params)))
+            // const points = chore.points
+            // let updatedMember = member
+            // let currentPoints = parseInt(updatedMember[0].points)
+            // updatedMember[0].points = parseInt(currentPoints) + parseInt(points)
+        //     this.forceUpdate()
+    
+    
+        //     const index = this.context.householdMembers.findIndex((member) => member.id === this.context.householdMembers.filter(member => member.id === parseInt(Object.values(this.props.match.params)))[0].id);
+        //     const u = this.context.householdMembers
+        //     console.log(u)
+        //    // u[index] = updatedMember[0]
+        //     console.log(u)
+                
+        //} 
+    //}
+    render(){
+       // console.log("State on Render: ", this.state)
+        const member = this.context.members.find(
+            member => member.id === parseInt(
+                Object.values(
+                    this.props.match.params
+                )))
+        const name = member.name
+        const points = member.points
+        const totalPoints = []  
+        this.context.members.forEach(member => 
+            totalPoints.push(member.points))
+        const familyPoints = totalPoints.reduce(function(a, b){return a+b;}, 0)
+        const remainingPoints = parseInt(this.context.prize.goal) - parseInt(familyPoints)
+       
+        return (
+            <div>
+                <h1>{name}'s Dashboard</h1>
+                <section>
+                    <h2>Here are chores for today:</h2>
+                        {this.context.chores.filter(chore => chore.member_name === name).map((chore, idx) =>
+                            <li
+                                key = {idx}
+                            >
+                                {chore.chore} - {chore.points} points
+                                <br/>
+                                    <div>
+                                        <input 
+                                            type="radio" 
+                                            name="done" 
+                                            id = "done"
+                                            value={chore.id}
+                                            onClick = {this.finished}
+                                        />  Done!<br/>
+                                       
+                                        <input 
+                                            type="radio" 
+                                            name="done" 
+                                            defaultChecked
+                                            id="notDone" 
+                                            value={chore.id}
+                                            onClick = {this.notFinished}
+                                        /> Not Done<br/>
+                                    </div>
+                                  
+                               
+                                
+                            </li> 
+                        )}
+                        
+
+                    
+                    {/*Display active chores + point values
+                    Single Click: turn color, in progress, start timer
+                    Double Click: turn color, done */}
+                </section>
+                <section>
+                    <h2>{name}'s Points:</h2>
+                        {points ? points : 0}
+                    <br/>                    
+                    <div>Total family points: {familyPoints ? familyPoints : 0}
+                    <br/> 
+                    <section>
+                    
+                        <CheckGoal />
+                       
+                    </section>
+                    </div> <br/>
+
+                </section>
+                <div>
+                    <Link to = '/landing'>
+                        <button>
+                            Back to Family Dashboard
+                        </button>
+                    </Link>
+                </div>
+            </div>
+    )
+}}
+
+// checked = ()=>{
+//     const checked = document.querySelector(`#${chore.name}:checked`);
+//     let total = [parseInt(this.context.household.points)? this.context.household.points : 0];
+//     console.log("Total when loading: ", total, parseInt(checkboxes[0].value))
+//     // checkboxes.forEach((checkbox) => {
+//     //     total.push(parseInt(checkbox.value));
+//     // });
+//     // console.log("checkboxes:", checkboxes, "total: ", total)
+//     // let familyPoints = total.reduce(function(a, b){return a+b;}, 0)
+//     // this.context.updateHousehold(familyPoints)
+//     // console.log("Family Points: ", this.context.household.points)
+// }
+
+

@@ -4,12 +4,12 @@ import SetupFamilyMembers from './SetupFamilyMembers'
 import SetupChores from './SetupChores'
 import ChooseFamilyPrize from './ChooseFamilyPrize'
 
+
 const Setup = (props) => {
     const handlesubmit = (e) =>{
         props.history.push(`/landing`)
         
     }
-    
     return(
         <div className = "section-headers">
             <h2>Let's get you set up</h2>

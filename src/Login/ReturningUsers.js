@@ -1,13 +1,9 @@
 import React, { Component } from 'react'
 import Context from '../Context'
+import config from '../config'
 
 export default class ReturningUsers extends Component {
-    // constructor(props){
-    //     super(props)
-    //     this.state = {
-    //         householdName: ''
-    //     }
-    // }
+   
     static defaultProps = {
         history: {
             push: ()=>{}
@@ -15,37 +11,39 @@ export default class ReturningUsers extends Component {
     }
     static contextType = Context;
     
-    // setHouseholdName(householdName){
-    //     this.setState({householdName})
-    // };
-
-    handleSubmit= (e) => {
+ 
+    handleSubmit=(e) => {
         e.preventDefault()
-        this.context.addHousehold(e.target['household-name'].value)
-        this.props.history.push('/landing')
 
-        // const Household = {
-        //     householdName:  e.target['household-name'].value,
-        //     password: e.target['password'].value,
-        // }
-    //   fetch(`${config.API_ENDPOINT}/ENDPOINT`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'content-type': 'application/json'
-    //     },
-    //     body: JSON.stringify(Household)
-    //   })
-    //   .then(res => {
-    //     if (!res.ok)
-    //       return res.json().then(e => Promise.reject(e))
-    //     return res.json()
-    //   })
-    //   .then(household => {
-    //     this.context.addHoueshold(household)
-    //   })
-    //   .catch(error => {
-    //     console.error('add household ',{ error })
-    //   })
+        const household = {
+            email:  e.target['email'].value,
+            password: e.target['password'].value,
+        }
+        fetch(`${config.API_ENDPOINT}/household/login`, {
+            method: 'POST',
+            headers: {
+            'content-type': 'application/json'
+            },
+            body: JSON.stringify(household)
+        })
+        .then(res => {
+            if (!res.ok)
+                //throw error({error: "email already exists"})
+                return res.json().then(e => Promise.reject(e))
+            return res.json()
+        })
+        .then(household => {
+            let a = (Object.entries(household)[0])
+            let h = (a[1])
+            console.log(h)
+
+            this.context.addHousehold(h)
+            this.context.updateHouseholdPoints(0)
+            this.props.history.push('/landing')
+        })
+        .catch(error => {
+            console.error('add household ',{ error })
+        })
     }
     
 
@@ -55,13 +53,13 @@ export default class ReturningUsers extends Component {
             <form className='SignIn-form' id='household-name'  onSubmit={this.handleSubmit} >
                 <div>Welcome Back! Please Sign In:</div>
                 <div>
-                    <label htmlFor="household-name">Household name</label>
+                    <label htmlFor="email">Email:</label>
                     <input
                         required 
-                        placeholder='Last Name' 
+                        placeholder='email' 
                         type="text" 
-                        name='household-name' 
-                        id='household-name' 
+                        name='email' 
+                        id='email' 
                         //onChange={(e) => this.setHouseholdName(e.target.value)} 
                     />
                 </div>

@@ -6,24 +6,46 @@ import { BrowserRouter } from 'react-router-dom';
 class App extends Component {
 
   state = {
-      householdID: null,      
-      householdName:  "",
-      householdMembers: [],
-      chores: [],
-      prize: '',
+    household: [],  
+    members: [],
+    chores: [],
+    prize: '',
   }
-  static contextType = Context
-  
-  addHousehold = (householdID) =>{
-    this.setState({householdID})
-  }
+//   componentDidMount() {
+//     Promise.all([
+//         fetch(`${config.API_ENDPOINT}/chores`),
+//         fetch(`${config.API_ENDPOINT}/household`),
+//         fetch(`${config.API_ENDPOINT}/members`)
 
+//     ])
+//       .then(([choresRes, householdRes, membersRes]) => {
+//             if (!choresRes.ok)
+//                 return choresRes.json().then(e => Promise.reject(e));
+//             if (!householdRes.ok)
+//                 return householdRes.json().then(e => Promise.reject(e));
+//             if (!membersRes.ok)
+//                 return membersRes.json().then(e => Promise.reject(e));
+
+//             return Promise.all([choresRes.json(), householdRes.json(), membersRes.json()]);
+//         })
+//         .then(([chores, household, members]) => {
+//             this.setState({chores, household, members});
+//         })
+//         .catch(error => {
+//             console.error({error});
+//         });
+// }; 
+  addHousehold = (household) =>{
+    this.setState({household})
+  }
+  setFamilyPrize = (prize) =>{
+    this.setState(prize)
+  }
   addFamilyMember = (name) =>{
     let tempState = this.state;
-    tempState.householdMembers.push(name);
+    tempState.members.push(name);
     this.setState(tempState)
   }
-
   addChore = (chore) =>{
     let tempState = this.state;
     tempState.chores.push(chore);
@@ -34,32 +56,36 @@ class App extends Component {
     tempState.chores = doneChore;
     this.setState(tempState)
   }
+
+  updateHouseholdPoints = (totalPoints)=>{
+    let tempState = this.state;
+    tempState.household.points = totalPoints;
+    this.setState(tempState)
+    
+  }
   
   updateCurrentUser =(user) =>{
     let tempState = this.state;
-    tempState.householdMembers.push(user);
+    tempState.members.push(user);
     this.setState(tempState) 
   }
-  setFamilyPrize = (prize) =>{
-    this.setState({prize})
-
-  }
-  removeChore = (remove) =>{
+  
+  removeChore = (choreId) =>{
     let tempState = this.state;
-    tempState.chores = remove;
+    tempState.chores = this.state.chores.filter(chore => chore.id !== choreId);
     this.setState(tempState)
     }
   
-  removeMember = (remove) =>{
+  removeMember = (memberId) =>{
     let tempState = this.state;
-    tempState.householdMembers = remove;
+    tempState.members = this.state.members.filter(member => member.id !== memberId);
     this.setState(tempState)
   }
+
   render(){
     const value = {
-      householdID: this.state.householdID,      
-      householdName:  this.state.householdID,
-      householdMembers: this.state.householdMembers,
+      household: this.state.household,      
+      members: this.state.members,
       chores: this.state.chores,
       prize: this.state.prize,
       addHousehold: this.addHousehold,
@@ -68,7 +94,8 @@ class App extends Component {
       setFamilyPrize: this.setFamilyPrize,
       removeChore: this.removeChore,
       removeMember: this.removeMember,
-      updateChore: this.updateChore
+      updateChore: this.updateChore,
+      updateHouseholdPoints: this.updateHouseholdPoints
 
     }
     return (
