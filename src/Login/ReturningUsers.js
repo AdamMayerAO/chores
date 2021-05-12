@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component} from 'react'
+import { Link } from 'react-router-dom';
 import Context from '../Context'
 import config from '../config'
 
@@ -35,10 +36,53 @@ export default class ReturningUsers extends Component {
         .then(household => {
             let a = (Object.entries(household)[0])
             let h = (a[1])
-            console.log(h)
-
+            console.log("household: ", h)
             this.context.addHousehold(h)
             this.context.updateHouseholdPoints(0)
+            this.context.setFamilyPrize({
+                prize: h.prize,
+                goal: h.goal
+            })
+            fetch(`${config.API_ENDPOINT}/members/${this.context.household.id}`, {
+                method: 'GET',
+                headers: {
+                'content-type': 'application/json'
+                },
+            })
+            .then(res => {
+                if (!res.ok)
+                    return res.json().then(e => Promise.reject(e))
+                return res.json()
+            })
+            .then(members => {
+                let f = (Object.entries(members)[0])
+                let m = f[1]
+                this.context.updateMembers(m)
+            });
+            
+            fetch(`${config.API_ENDPOINT}/chores/id/${this.context.household.id}`, {
+                method: 'GET',
+                headers: {
+                'content-type': 'application/json'
+                },
+            })
+            .then(res => {
+                if (!res.ok)
+                    //throw error({error: "email already exists"})
+                    return res.json().then(e => Promise.reject(e))
+                return res.json()
+            })
+            .then(chores => {
+                let g = (Object.entries(chores)[0])
+                let c = g[1]
+
+                const addToChores = c.filter(chore => chore.done === false)
+                const addToPA = c.filter(chore => chore.done === true)
+
+                this.context.updateChores(addToChores)
+                this.context.updatePendingApproval(addToPA)
+            })
+
             this.props.history.push('/landing')
         })
         .catch(error => {
@@ -57,6 +101,7 @@ export default class ReturningUsers extends Component {
                     <input
                         required 
                         placeholder='email' 
+                        defaultValue = 'r.adammayer@gmail.com'
                         type="text" 
                         name='email' 
                         id='email' 
@@ -70,6 +115,7 @@ export default class ReturningUsers extends Component {
                     <input
                         required
                         placeholder = 'password'
+                        defaultValue = 'a'
                         type="password" 
                         name='password' 
                         id='password' 
@@ -83,6 +129,12 @@ export default class ReturningUsers extends Component {
                 >
                     Sign In
                 </button>
+                <br/><br/><br/>
+                <Link to = '/signupform'>
+                    <button>
+                        New Users: Sign Up Here
+                    </button>
+                </Link>
             </form>
         </div>
     )

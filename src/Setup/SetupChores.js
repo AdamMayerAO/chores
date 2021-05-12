@@ -3,11 +3,7 @@ import './SetupChores.css'
 import Context from '../Context'
 import config from '../config'
 
-// const createID = ()=>{
-//   return(
-//       Math.floor(Math.random()*100000)
-//   )
-// }
+
 export default class SetupChores extends Component{
    
   static defaultProps = {
@@ -20,13 +16,12 @@ export default class SetupChores extends Component{
   handleSubmit= (e)=>{
     e.preventDefault()
     const chore = {
+      householdId: this.context.household.id,
+      points: parseInt(e.target['points'].value),
       chore: e.target['chore'].value,
-      points: e.target['points'].value,
-      assignedTo: e.target['assign'].value,
       done: false,
-      householdId: this.context.household.id
+      member_name: e.target['assign'].value
     }
-    console.log(chore)
     fetch(`${config.API_ENDPOINT}/chores/add-chore`, {
       method: 'POST',
       headers: {
@@ -54,22 +49,25 @@ export default class SetupChores extends Component{
   
   remove = (e) =>{
     const chore = this.context.chores.find(chore => chore.id === parseInt(e))
-    fetch(`${config.API_ENDPOINT}/chores/remove-chore`, {
+    const toDelete = {
+      householdId: chore.householdId
+    }
+    fetch(`${config.API_ENDPOINT}/chores/id/${chore.id}`, {
       method: 'DELETE',
       headers: {
-        'content-type': 'application/json'
-      },  
-      body: JSON.stringify(chore)
-    })
+          'content-type': 'application/json',
+      },
+      body: JSON.stringify(toDelete)
+      })
       .then(res => {
-        if (!res.ok)
-          return res.json().then(e => Promise.reject(e))
+          if (!res.ok)
+              return res.json().then(e => Promise.reject(e))
       })
       .then(() => {
         this.context.removeChore(chore.id)
       })
       .catch(error => {
-        console.error({ error })
+        console.error("Chore not removed!", { error })
       })
   }
 

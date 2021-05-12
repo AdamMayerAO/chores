@@ -3,12 +3,6 @@ import './SetupFamilyMembers.css'
 import Context from '../Context'
 import config from '../config'
 
-
-// const createID = ()=>{
-//     return(
-//         Math.floor(Math.random()*100000)
-//     )
-// }
 export default class SetupFamilyMembers extends Component{
    
     static defaultProps = {
@@ -17,11 +11,11 @@ export default class SetupFamilyMembers extends Component{
         },
     }
     static contextType = Context;
-
-    
     
     handleSubmitAdult= (e)=>{
         e.preventDefault()
+        console.log(this.context)
+
         const member = {
                 name: e.target['name'].value, 
                 age: 'adult',
@@ -56,6 +50,7 @@ export default class SetupFamilyMembers extends Component{
     }
     handleSubmitKid= (e)=>{
         e.preventDefault()
+        console.log(this.context.household.id)
         const member = {
             name: e.target['name'].value, 
             age: 'kid',
@@ -104,7 +99,6 @@ export default class SetupFamilyMembers extends Component{
                 return res.json().then(e => Promise.reject(e))
             })
             .then(() => {
-                console.log(this.context.members)
             this.context.removeMember(member.id)
             console.log(this.context.members)
             })

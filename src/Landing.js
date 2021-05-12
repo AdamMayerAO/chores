@@ -19,6 +19,7 @@ export default class Landing extends Component{
         }
     }
     render(){
+
         const users = this.context.members
         const kids = users.filter(kid => kid.age ==='kid')
         const adults = users.filter(adult => adult.age ==='adult')

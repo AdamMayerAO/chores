@@ -9,41 +9,35 @@ class App extends Component {
     household: [],  
     members: [],
     chores: [],
+    pendingApproval: [],
     prize: '',
   }
-//   componentDidMount() {
-//     Promise.all([
-//         fetch(`${config.API_ENDPOINT}/chores`),
-//         fetch(`${config.API_ENDPOINT}/household`),
-//         fetch(`${config.API_ENDPOINT}/members`)
 
-//     ])
-//       .then(([choresRes, householdRes, membersRes]) => {
-//             if (!choresRes.ok)
-//                 return choresRes.json().then(e => Promise.reject(e));
-//             if (!householdRes.ok)
-//                 return householdRes.json().then(e => Promise.reject(e));
-//             if (!membersRes.ok)
-//                 return membersRes.json().then(e => Promise.reject(e));
-
-//             return Promise.all([choresRes.json(), householdRes.json(), membersRes.json()]);
-//         })
-//         .then(([chores, household, members]) => {
-//             this.setState({chores, household, members});
-//         })
-//         .catch(error => {
-//             console.error({error});
-//         });
-// }; 
   addHousehold = (household) =>{
-    this.setState({household})
+    let tempState = this.state;
+    tempState.household = household;
+    this.setState(tempState)
   }
   setFamilyPrize = (prize) =>{
-    this.setState(prize)
+    let tempState = this.state;
+    tempState.prize = prize;
+    this.setState(tempState)
   }
   addFamilyMember = (name) =>{
     let tempState = this.state;
     tempState.members.push(name);
+    this.setState(tempState)
+  }
+  updateMembers = (m) =>{
+    let tempState = this.state;
+    tempState.members = m;
+    this.setState(tempState)
+  }
+
+  //adds chores from database
+  updateChores = (c) =>{
+    let tempState = this.state;
+    tempState.chores = c;
     this.setState(tempState)
   }
   addChore = (chore) =>{
@@ -52,16 +46,32 @@ class App extends Component {
     this.setState(tempState)
   }
   updateChore = (doneChore) =>{
+    //updates with array from backend
     let tempState = this.state;
     tempState.chores = doneChore;
     this.setState(tempState)
   }
+  updatePendingApproval = (addToPA) =>{
+    //updates with array from backend
+    let tempState = this.state;
+    tempState.pendingApproval = addToPA;
+    this.setState(tempState)
+  }
+  addToPendingApproval = (chore)=>{
+    let tempState = this.state;
+    tempState.pendingApproval.push(chore);
+    this.setState(tempState)
+  }
 
+  removeFromPendingApproval = (returnChore)=>{
+    let tempState = this.state;
+    tempState.pendingApproval = returnChore;
+    this.setState(tempState)
+  }
   updateHouseholdPoints = (totalPoints)=>{
     let tempState = this.state;
     tempState.household.points = totalPoints;
     this.setState(tempState)
-    
   }
   
   updateCurrentUser =(user) =>{
@@ -88,15 +98,20 @@ class App extends Component {
       members: this.state.members,
       chores: this.state.chores,
       prize: this.state.prize,
+      pendingApproval: this.state.pendingApproval,
       addHousehold: this.addHousehold,
       addFamilyMember: this.addFamilyMember,
       addChore: this.addChore,
       setFamilyPrize: this.setFamilyPrize,
       removeChore: this.removeChore,
       removeMember: this.removeMember,
+      updateChores: this.updateChores,
       updateChore: this.updateChore,
-      updateHouseholdPoints: this.updateHouseholdPoints
-
+      updateMembers: this.updateMembers,
+      updateHouseholdPoints: this.updateHouseholdPoints,
+      addToPendingApproval: this.addToPendingApproval,
+      removeFromPendingApproval: this.removeFromPendingApproval,
+      updatePendingApproval: this.updatePendingApproval
     }
     return (
       <main className='App'>

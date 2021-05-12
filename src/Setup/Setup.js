@@ -1,18 +1,28 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './Setup.css'
 import SetupFamilyMembers from './SetupFamilyMembers'
 import SetupChores from './SetupChores'
 import ChooseFamilyPrize from './ChooseFamilyPrize'
+import Context from '../Context'
 
+export default class Setup extends Component {
+    static defaultProps = {
+        history: {
+            push: ()=>{}
+        },
+    }
+    static contextType = Context;
 
-const Setup = (props) => {
+    render(){
+        console.log(this.context)
     const handlesubmit = (e) =>{
-        props.history.push(`/landing`)
+        this.props.history.push(`/landing`)
         
     }
+
     return(
         <div className = "section-headers">
-            <h2>Let's get you set up</h2>
+            <h2>Hello {this.context.household.householdName}'s! Let's get you set up</h2>
             <section>
                 <SetupFamilyMembers/>
             </section>
@@ -27,5 +37,4 @@ const Setup = (props) => {
             </button>
         </div>
     )
-}
-export default Setup
+}}

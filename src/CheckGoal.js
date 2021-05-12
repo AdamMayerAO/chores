@@ -14,7 +14,7 @@ export default class CheckGoal extends Component{
         } else {
             return(
                 remainingPoints? 
-                `We need ${remainingPoints} more points until we can ${this.context.prize.prize? this.context.prize.prize: 'get a prize'}`
+                `We need ${remainingPoints} more points until we can get ${this.context.prize.prize? this.context.prize.prize: 'get a prize'}`
                 :
                 'Update your family settings to set up your Family Goal'
             )

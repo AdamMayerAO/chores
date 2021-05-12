@@ -18,36 +18,66 @@ export default class ChooseFamilyPrize extends Component{
             householdId: this.context.household.id,
             goal: e.target['goal'].value
         }
-    fetch(`${config.API_ENDPOINT}/household/prize`, {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json',
-        },
-        body: JSON.stringify(prize)
-      })
-      .then(res => {
-        if (!res.ok)
-        return res.json().then(e => Promise.reject(e))
-        return res.json()
-      })
-      .then( () => {
-        console.log(prize)
-        this.context.setFamilyPrize({prize})
-        //alert("All Set")
-        document.getElementById("setup-family-prize").reset();
-        console.log(this.context.prize)
-      })
-      .catch(error => {
-          console.error('add chore ',{ error })
-      })
+        fetch(`${config.API_ENDPOINT}/household/prize`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(prize)
+        })
+        .then(res => {
+            console.log(res)
+            if (!res.ok)
+                return res.json().then(e => Promise.reject(e))
+            return res.json()
+        })
+        .then( (household) => {
+            let a = (Object.entries(household)[0])
+            let p = (a[1])
+            console.log(p)
+            const setPrize = {
+                prize: p.prize,
+                goal: p.goal
+            }
+           this.context.setFamilyPrize(setPrize)
+            //alert("All Set")
+            document.getElementById("setup-family-prize").reset();
+            console.log(this.context.prize)
+        })
+        .catch(error => {
+            console.error('add chore ',{ error })
+        })
 
     }
     reset = ()=>{
-        this.context.setFamilyPrize({
-            prize: '',
-            goal: ''
+        const resetPrize = {
+            prize: "", 
+            householdId: this.context.household.id,
+            goal: null
+        }
+        console.log(resetPrize)
+        fetch(`${config.API_ENDPOINT}/household/prize`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(resetPrize)
         })
-        document.getElementById("setup-family-prize").reset();
+        .then(res => {
+            if (!res.ok)
+                return res.json().then(e => Promise.reject(e))
+            //return res.json()
+        })
+        .then( () => {
+            this.context.setFamilyPrize({resetPrize})
+            //alert("All Set")
+            document.getElementById("setup-family-prize").reset();
+            console.log(this.context.prize)
+        })
+        .catch(error => {
+            console.error('add chore ',{ error })
+        })
+        
 
     }
     render(){
