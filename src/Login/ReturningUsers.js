@@ -101,7 +101,7 @@ export default class ReturningUsers extends Component {
                     <input
                         required 
                         placeholder='email' 
-                        defaultValue = 'r.adammayer@gmail.com'
+                        //defaultValue = 'r.adammayer@gmail.com'
                         type="text" 
                         name='email' 
                         id='email' 
@@ -115,7 +115,7 @@ export default class ReturningUsers extends Component {
                     <input
                         required
                         placeholder = 'password'
-                        defaultValue = 'a'
+                        //defaultValue = 'a'
                         type="password" 
                         name='password' 
                         id='password' 
