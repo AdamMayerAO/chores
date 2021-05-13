@@ -1,3 +1,3 @@
 export default{
-    API_ENDPOINT: 'http://localhost:8000' || `https://choresserver.herokuapp.com/`
+    API_ENDPOINT: `https://choresserver.herokuapp.com/` ||'http://localhost:8000'
 }
