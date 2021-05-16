@@ -24,7 +24,7 @@ export default class Landing extends Component{
         const kids = users.filter(kid => kid.age ==='kid')
         const adults = users.filter(adult => adult.age ==='adult')
         return(
-            <div>
+            <div className = 'landing'>
                 <h1>Welcome {this.context.household.householdName} Family</h1>
                 <h2>Click on your name to start</h2>
                 <div className = 'family'>
@@ -55,6 +55,10 @@ export default class Landing extends Component{
                 <section>
                     <Link to = '/setup'>
                         <button>Update Family Settings</button>
+                    </Link>
+                     <br/>
+                     <Link to = '/'>
+                        <button className = 'backButton'>Log Out</button>
                     </Link>
                 </section>
             </div>

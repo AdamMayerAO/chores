@@ -1,0 +1,25 @@
+.SignIn{ 
+    background: rgb(2,0,36);
+    background: linear-gradient(0deg, rgb(10, 2, 149) 0%, rgb(16, 72, 242) 0%, rgba(0,212,255,1) 100%);
+    display: flex; 
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.buttons{ 
+    display: flex; 
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+}
+
+.title{
+    text-align: center;
+    color: #553295; 
+    font-family: 'Raleway',sans-serif; 
+    font-size: 20px; 
+    font-weight: 800; 
+    line-height: 22px; 
+    margin: 0 0 24px; 
+    text-transform: uppercase; 
+}

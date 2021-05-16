@@ -1,3 +1,9 @@
+.landing{
+  background: rgb(2,0,36);
+  background: linear-gradient(0deg, rgb(90, 83, 228) 0%, rgb(99, 164, 234) 0%, rgba(0,212,255,1) 100%);
+  
+}
+
 .family{
     display: flex; 
     justify-content: space-around;

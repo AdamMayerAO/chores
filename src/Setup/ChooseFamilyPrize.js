@@ -83,9 +83,9 @@ export default class ChooseFamilyPrize extends Component{
     render(){
     return(
         <div>
-            <h2>Family Prize</h2> 
+            <h3 className = 'title'>Family Prize:</h3> 
             <form className='setup-family-prize' id = "setup-family-prize" onSubmit={this.handleSubmit}>
-                <div><br/>
+                <div>
                     <label>Please Choose a Prize for your family</label>
                     <input
                         required 
@@ -104,10 +104,10 @@ export default class ChooseFamilyPrize extends Component{
                         id='goal' 
                     /><br/>
                     
-                    <button type = 'submit'>
+                    <button  className = 'prizeButton' type = 'submit'>
                         Set Family Prize!
                     </button>
-                    <section>
+                    <section className ='prize'>
                         Our Family Prize: {this.context.prize.prize}
                         <br></br>
                         When we reach: {this.context.prize.goal} points

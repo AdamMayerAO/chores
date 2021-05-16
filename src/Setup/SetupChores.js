@@ -75,7 +75,7 @@ export default class SetupChores extends Component{
   return (
     <main className='chores'>
       <header className='Chores-header'>
-        <h1>Choose Family Chores</h1>
+      <h3 className = 'title'>Family Chores:</h3>
       </header>
       <section>
         <form className='setup-family-chores' id = 'chores' onSubmit={this.handleSubmit}>
@@ -114,7 +114,7 @@ export default class SetupChores extends Component{
                 )}
             </select>
           </div>
-          <button type = 'submit'>
+          <button className = 'button' type = 'submit'>
               OK!
           </button>
         </form> <br/>

@@ -2,6 +2,7 @@ import React, { Component} from 'react'
 import { Link } from 'react-router-dom';
 import Context from '../Context'
 import config from '../config'
+import './ReturningUsers.css'
 
 export default class ReturningUsers extends Component {
    
@@ -93,19 +94,17 @@ export default class ReturningUsers extends Component {
 
     render(){
     return(
-        <div>
+        <div className='SignIn'>
             <form className='SignIn-form' id='household-name'  onSubmit={this.handleSubmit} >
-                <div>Welcome Back! Please Sign In:</div>
+                <div className='title'>Welcome Back! Please Sign In:</div>
                 <div>
                     <label htmlFor="email">Email:</label>
                     <input
                         required 
                         placeholder='email' 
-                        //defaultValue = 'r.adammayer@gmail.com'
                         type="text" 
                         name='email' 
                         id='email' 
-                        //onChange={(e) => this.setHouseholdName(e.target.value)} 
                     />
                 </div>
                 
@@ -115,26 +114,24 @@ export default class ReturningUsers extends Component {
                     <input
                         required
                         placeholder = 'password'
-                        //defaultValue = 'a'
                         type="password" 
                         name='password' 
                         id='password' 
-                        // onChange={e => updateContent(e.target.value)}                
                     />
-                </div>
+                </div><br/>
 
-
-                <button 
-                    type = 'submit'   
-                >
-                    Sign In
-                </button>
-                <br/><br/><br/>
-                <Link to = '/signupform'>
-                    <button>
-                        New Users: Sign Up Here
+               
+                    <button 
+                        type = 'submit'   
+                    >
+                        Sign In
                     </button>
-                </Link>
+                    <br/><br/><br/>
+                    <Link to = '/signupform'>
+                        <button>
+                            New Users: Sign Up Here
+                        </button>
+                    </Link>
             </form>
         </div>
     )

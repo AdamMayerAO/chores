@@ -1,4 +1,4 @@
-.finished { 
+.button { 
     background-color: lighten(green, 5%);
     cursor: pointer;
     cursor: hand;
@@ -9,4 +9,12 @@
     text-align:center;
     line-height:50px;
     border-radius: 30px;
+}
+
+.button:active{
+        background-color: rgb(29, 179, 29);
+}
+
+.upapprovedButton:active{
+    background-color: rgb(194, 42, 75);
 }

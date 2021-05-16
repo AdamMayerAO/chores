@@ -176,6 +176,7 @@ export default class AdminDashboard extends Component{
                                 <br/><br/>
                                 <button
                                     name = "finished"  
+                                    className = 'button'
                                     value = {chore.id}
                                     id = {chore.id}
                                     onClick = {()=>this.finished(chore.id)}
@@ -212,6 +213,7 @@ export default class AdminDashboard extends Component{
                                     name = "approved"  
                                     value = {chore.id}
                                     id = {chore.id}
+                                    className='button'
                                     onClick = {(e)=>this.approved(e.target.value) }
                                 >
                                     Approved!
@@ -220,6 +222,7 @@ export default class AdminDashboard extends Component{
                                     name = "unApproved"  
                                     value = {chore.id}
                                     id = {chore.id}
+                                    className = 'unapprovedButton'
                                     onClick = {(e)=>this.notFinished(e.target.value) }
                                 >
                                     Not Approved :(
@@ -236,18 +239,25 @@ export default class AdminDashboard extends Component{
                 </section>
             </section>
              <br/>
-            <div>
-               <Link to = '/landing'>
-                   <button>
-                       Back to Family Dashboard
-                   </button>
-               </Link>
-           </div><br/>
-           <section>
-                <Link to = '/setup'>
-                    Update Family Settings
-                </Link>
-            </section>
+            <div className = 'buttons'>
+                <section>
+                    <Link to = '/landing'>
+                        <button>
+                            Back to Family Dashboard
+                        </button>
+                    </Link>
+                </section>
+                <section>
+                    <Link to = '/setup'>
+                        <button>Update Family Settings </button>
+                    </Link>
+                </section>
+                <section>
+                    <Link to = '/'>
+                        <button className = 'backButton'>Log Out</button>
+                    </Link>
+                </section>
+            </div>
         </div>
     )
 }}

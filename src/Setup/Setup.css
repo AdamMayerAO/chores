@@ -5,3 +5,21 @@
 .section{
     text-align: left;
 }
+.center{
+    text-align: center;
+}
+.submit{
+    position: relative;
+    left: 105px;
+    background-color: lighten(green, 5%);
+    cursor: pointer;
+    cursor: hand;
+    width: 150px;
+    height: 30px;
+    background-color: rgb(43, 177, 221);
+    color: white;
+    text-align:center;
+    line-height:30px;
+    border-radius: 30px;
+    font-weight: bolder;
+}

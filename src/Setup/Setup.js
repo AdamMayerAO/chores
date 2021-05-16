@@ -22,15 +22,17 @@ export default class Setup extends Component {
 
     return(
         <div className = "section-headers">
-            <h2>Hello {this.context.household.householdName}'s! Let's get you set up</h2>
+            <h2 className = 'center'>Hello {this.context.household.householdName}'s!<br/> Let's get you set up</h2>
             <section>
                 <SetupFamilyMembers/>
             </section>
             <section> <SetupChores /></section>
             <section><ChooseFamilyPrize/></section>
-            <br/><button
-            type = 'submit'
-            onClick= {() => handlesubmit()}
+            <br/>
+            <button
+                className = 'submit'
+                type = 'submit'
+                onClick= {() => handlesubmit()}
             >
                 All Set, Let's Go!
 

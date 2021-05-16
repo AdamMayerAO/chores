@@ -111,7 +111,7 @@ export default class SetupFamilyMembers extends Component{
         return (
         
             <div className = 'AddFamilyMember'>
-                <h3 className = 'header'>Add Family Members</h3>
+                <h3 className = 'title'>Family Members:</h3>
                 <section>
                     <form className='setup-family-members' id = 'aForm' onSubmit={this.handleSubmitAdult}>
                         <div className ='input'>
@@ -122,10 +122,11 @@ export default class SetupFamilyMembers extends Component{
                                 type="text" 
                                 name='name' 
                                 id ='kid' 
-                                //onChange={(e) => this.setAdult(e.target.value)} 
                             /><br/>
                         </div>
-                        <button type = 'submit'>
+                        <button 
+                            className = 'button'
+                            type = 'submit'>
                             Add Adult
                         </button>
                     </form> <br/>
@@ -138,12 +139,12 @@ export default class SetupFamilyMembers extends Component{
                                 type="text" 
                                 name='name' 
                                 id ='adult' 
-                              
-                                //onChange={(e) => this.setKid(e.target.value)} 
                             /><br/>
                         </div>
                 
-                        <button type = 'submit'>
+                        <button 
+                        className = 'button'
+                        type = 'submit'>
                             Add Kid
                         </button>
                     </form>
