@@ -131,8 +131,8 @@ export default class KidsDashboard extends Component{
                             <li
                                 key = {idx}
                             >
-                                {chore.chore} - {chore.points} points
-                                <br/><br/>
+                                {chore.chore} - {chore.points} points  -~-~-
+                                
                                 <button
                                     name = "finished"  
                                     value = {chore.id}
